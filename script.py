@@ -19,20 +19,20 @@ def fetch_and_parse_html(url):
         return None
 
 
-def download_mp3(url):
+def download_mp3(url, directory):
     filename = urllib.parse.unquote(url.split('/')[-1].replace('%2520', ' '))
     response = requests.get(url)
     if response.status_code == 200:
-        # TODO: replace with user input
-        with open(os.path.join('Terraria', filename), 'wb') as f:
+        with open(os.path.join(directory, filename), 'wb') as f:
             f.write(response.content)
         print('downloaded', filename)
     else:
         print('failed to download', filename)
 
 
-# TODO: replace with user input
-url = 'https://downloads.khinsider.com/game-soundtracks/album/terraria-pc-gamerip'
+directory = input("Enter the directory to save the files: ")
+url = input("Enter the URL of the soundtrack: ")
+
 parsed = fetch_and_parse_html(url)
 
 table = parsed.find(name='table', attrs={"id": "songlist"})
@@ -49,4 +49,4 @@ for row in rows:
     audio = download_page.find(name='audio', attrs={"id": "audio"})
     if not audio:
         continue
-    download_mp3(audio['src'])
+    download_mp3(audio['src'], directory)

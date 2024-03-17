@@ -13,7 +13,7 @@ def rename_files(directory):
 
 
 # Specify the directory path
-directory_path = 'Terraria'
+directory = input("Enter the directory to rename the files: ")
 
 # Call the function to rename files
-rename_files(directory_path)
+rename_files(directory)
